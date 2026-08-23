@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { Empleado } from '../../empleado';
 import { EmpleadoService } from '../empleado.service';
 
 @Component({
   selector: 'app-agregar',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterModule],
   templateUrl: './agregar.html'
 })
 export class AgregarComponent {
@@ -30,7 +30,7 @@ export class AgregarComponent {
 
     //Regla: Quitar idEmpleado antes de enviar
     const { idEmpleado, ...payload } = this.empleado;
-    
+
     this.empleadoService.agregarEmpleado(payload as Empleado).subscribe({
       next: () => this.router.navigate(['/empleados']),
       error: (e) => {
