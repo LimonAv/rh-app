@@ -1,1 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+.navbar-purple {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background: linear-gradient(120deg,
+    rgba(46, 26, 71, 0.55) 0%,
+    rgba(75, 44, 115, 0.55) 35%,
+    rgba(139, 92, 246, 0.45) 50%,
+    rgba(75, 44, 115, 0.55) 65%,
+    rgba(46, 26, 71, 0.55) 100%);
+  background-size: 250% 100%;
+  animation: shimmer 8s ease-in-out infinite;
+
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 30px rgba(107, 63, 160, 0.25);
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.navbar-purple .navbar-brand {
+  color: #f0e4ff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 12px rgba(180, 130, 255, 0.4);
+}
+
+.navbar-purple .navbar-brand:hover {
+  color: #ffffff;
+}
+
+.navbar-purple .nav-link {
+  color: #cbb3f0;
+  transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+}
+
+.navbar-purple .nav-link:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.navbar-purple .nav-link.active {
+  color: #ffffff;
+  background: rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(180, 130, 255, 0.35);
+  box-shadow: 0 0 16px rgba(139, 92, 246, 0.35);
+  font-weight: 500;
+}
+
+.navbar-purple .navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-purple .navbar-toggler-icon {
+  filter: invert(1);
+}
