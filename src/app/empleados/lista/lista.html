@@ -1,23 +1,33 @@
 <div class="container mt-4">
-    <h2 class="text-center">Lista de Empleados</h2>
-    <table class="table table-dark table-striped mt-3 table-hover">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Departamento</th>
-            <th>Sueldo</th>
-        </tr>
-        </thead>
-        <tbody>
-        @for (empleado of empleados(); track empleado.idEmpleado) {
-            <tr>
-                <td>{{ empleado.idEmpleado }}</td>
-                <td>{{ empleado.nombre }}</td>
-                <td>{{ empleado.departamento }}</td>
-                <td>{{ empleado.sueldo | currency:'MXN':'symbol':'1.2-2'}}</td>
-            </tr>
-        }
-        </tbody>
-    </table>
+  <h2 class="text-center">Listado de Empleados</h2>
+  <table class="table table-dark table-striped mt-3">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Departamento</th>
+        <th>Sueldo</th>
+        <th style="width:140px">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (empleado of empleados(); track empleado.idEmpleado) {
+      <tr>
+        <td>{{ empleado.idEmpleado }}</td>
+        <td>{{ empleado.nombre }}</td>
+        <td>{{ empleado.departamento }}</td>
+        <td>{{ empleado.sueldo | currency:'':'symbol':'1.2-2' }}</td>
+        <td class="d-flex gap-2">
+          <a class="btn btn-sm btn-primary" [routerLink]="['/editar-empleado', empleado.idEmpleado]">
+            Editar
+          </a>
+          <button class="btn btn-sm btn-danger" (click)="eliminar(empleado.idEmpleado)"
+            [disabled]="eliminandoId()===empleado.idEmpleado">
+            {{ eliminandoId() === empleado.idEmpleado ? 'Eliminando...' : 'Eliminar'}}
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
 </div>
