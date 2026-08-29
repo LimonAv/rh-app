@@ -11,19 +11,30 @@ import { RouterLink } from '@angular/router';
 })
 export class ListaComponent {
   empleados = signal<Empleado[]>([]);
+  cargando = signal(true);
   private empleadoService = inject(EmpleadoService);
 
   // Para deshabilitar botones mientras se elimina
   eliminandoId = signal<number | null>(null);
+
+  // Paleta fija para que cada departamento tenga siempre el mismo color
+  private paletaDepartamentos = ['#8b5cf6', '#e8b95c', '#5fd6a4', '#5cb8e8', '#f2637c', '#c084fc'];
 
   constructor() {
     this.cargar();
   }
 
   cargar() {
+    this.cargando.set(true);
     this.empleadoService.obtenerEmpleados().subscribe({
-      next: (data) => this.empleados.set(data),
-      error: (err) => console.error('Error cargando empleados', err)
+      next: (data) => {
+        this.empleados.set(data);
+        this.cargando.set(false);
+      },
+      error: (err) => {
+        console.error('Error cargando empleados', err);
+        this.cargando.set(false);
+      }
     });
   }
 
@@ -47,5 +58,15 @@ export class ListaComponent {
         alert('No se pudo eliminar. Verifica el backend y los permisos/CORS.');
       }
     });
+  }
+
+  // Asigna un color estable a cada departamento según su nombre
+  colorDepartamento(departamento: string): string {
+    let hash = 0;
+    for (let i = 0; i < departamento.length; i++) {
+      hash = departamento.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % this.paletaDepartamentos.length;
+    return this.paletaDepartamentos[index];
   }
 }

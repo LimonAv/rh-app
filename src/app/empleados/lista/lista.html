@@ -1,33 +1,57 @@
 <div class="container mt-4">
-  <h2 class="text-center">Listado de Empleados</h2>
-  <table class="table table-dark table-striped mt-3">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Departamento</th>
-        <th>Sueldo</th>
-        <th style="width:140px">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (empleado of empleados(); track empleado.idEmpleado) {
-      <tr>
-        <td>{{ empleado.idEmpleado }}</td>
-        <td>{{ empleado.nombre }}</td>
-        <td>{{ empleado.departamento }}</td>
-        <td>{{ empleado.sueldo | currency:'':'symbol':'1.2-2' }}</td>
-        <td class="d-flex gap-2">
-          <a class="btn btn-sm btn-primary" [routerLink]="['/editar-empleado', empleado.idEmpleado]">
-            Editar
-          </a>
-          <button class="btn btn-sm btn-danger" (click)="eliminar(empleado.idEmpleado)"
-            [disabled]="eliminandoId()===empleado.idEmpleado">
-            {{ eliminandoId() === empleado.idEmpleado ? 'Eliminando...' : 'Eliminar'}}
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+  <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-1">
+    <div>
+      <span class="page-eyebrow">Expediente de personal</span>
+      <h2 class="page-title mb-0">Listado de empleados</h2>
+    </div>
+    <a class="btn btn-primary" [routerLink]="['/agregar-empleado']">+ Agregar empleado</a>
+  </div>
+  <p class="page-subtitle">{{ empleados().length }} {{ empleados().length === 1 ? 'empleado registrado' : 'empleados registrados' }}</p>
+
+  <div class="ledger-wrap">
+    @if (cargando()) {
+      <div class="rh-skeleton-row"></div>
+      <div class="rh-skeleton-row"></div>
+      <div class="rh-skeleton-row"></div>
+    } @else if (empleados().length === 0) {
+      <div class="rh-empty">
+        <div class="rh-empty-title">Todavía no hay empleados</div>
+        <p class="mb-3">Agrega el primer registro para empezar el expediente.</p>
+        <a class="btn btn-primary" [routerLink]="['/agregar-empleado']">Agregar empleado</a>
+      </div>
+    } @else {
+      <table class="table table-ledger">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Departamento</th>
+            <th>Sueldo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (empleado of empleados(); track empleado.idEmpleado) {
+          <tr [style.--dept-color]="colorDepartamento(empleado.departamento)">
+            <td data-label="ID" class="cell-id">#{{ empleado.idEmpleado }}</td>
+            <td data-label="Nombre" class="cell-nombre">{{ empleado.nombre }}</td>
+            <td data-label="Departamento">
+              <span class="dept-badge">{{ empleado.departamento }}</span>
+            </td>
+            <td data-label="Sueldo" class="cell-sueldo">{{ empleado.sueldo | currency:'':'symbol':'1.2-2' }}</td>
+            <td data-label="Acciones" class="cell-acciones d-flex gap-2">
+              <a class="btn btn-sm btn-primary" [routerLink]="['/editar-empleado', empleado.idEmpleado]">
+                Editar
+              </a>
+              <button class="btn btn-sm btn-danger" (click)="eliminar(empleado.idEmpleado)"
+                [disabled]="eliminandoId()===empleado.idEmpleado">
+                {{ eliminandoId() === empleado.idEmpleado ? 'Eliminando...' : 'Eliminar'}}
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
 </div>

@@ -1,30 +1,35 @@
-<div class="container mt-4">
-    <h2 class="text-center">Agregar empleado</h2>
-    <form (ngSubmit)="onSubmit()" #f="ngForm" class="mt-3">
-        <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="nombre" [(ngModel)]="empleado.nombre" required minlength="2"
-                placeholder="Nombre completo" />
-            <div class="form-text">Requerido, mínimo 2 caracteres.</div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Departamento</label>
-            <input type="text" class="form-control" name="departamento" [(ngModel)]="empleado.departamento" required
-                placeholder="Ej. Ventas, TI, RH" />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Sueldo</label>
-            <input type="number" class="form-control" name="sueldo" [(ngModel)]="empleado.sueldo" required min="0"
-                step="0.01" placeholder="0.00" />
-        </div>
-        <div class="d-flex gap-2">
-            <button class="btn btn-primary" type="submit" [disabled]="f.invalid || guardando">
-                {{ guardando ? 'Guardando...' : 'Guardar' }}
-            </button>
-            <a class="btn btn-outline-secondary" [routerLink]="['/empleados']">Cancelar</a>
-        </div>
-        @if (error) {
-        <div class="alert alert-danger mt-3">{{ error }}</div>
-        }
-    </form>
+<div class="container mt-4" style="max-width: 620px;">
+    <span class="page-eyebrow">Nuevo registro</span>
+    <h2 class="page-title">Agregar empleado</h2>
+    <p class="page-subtitle">Completa los datos para crear un nuevo expediente.</p>
+
+    <div class="rh-card">
+        <form (ngSubmit)="onSubmit()" #f="ngForm">
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" [(ngModel)]="empleado.nombre" required minlength="2"
+                    placeholder="Nombre completo" />
+                <div class="form-text">Requerido, mínimo 2 caracteres.</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Departamento</label>
+                <input type="text" class="form-control" name="departamento" [(ngModel)]="empleado.departamento" required
+                    placeholder="Ej. Ventas, TI, RH" />
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Sueldo</label>
+                <input type="number" class="form-control" name="sueldo" [(ngModel)]="empleado.sueldo" required min="0"
+                    step="0.01" placeholder="0.00" />
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary" type="submit" [disabled]="f.invalid || guardando">
+                    {{ guardando ? 'Guardando...' : 'Guardar' }}
+                </button>
+                <a class="btn btn-outline-secondary" [routerLink]="['/empleados']">Cancelar</a>
+            </div>
+            @if (error) {
+            <div class="alert alert-danger mt-3 mb-0">{{ error }}</div>
+            }
+        </form>
+    </div>
 </div>
